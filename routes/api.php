@@ -17,21 +17,10 @@ Route::get('hi', function () {
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
-Route::middleware('auth:sanctum')->get('/me', function (Request $request) {
-    // fix this if the token is invalid or expired
-    if (! $request->user()) {
-        return response()->json(['message' => 'Unauthenticated.'], 401);
-    }
-
-    return $request->user();
-});
+Route::middleware('auth:sanctum')->get('/me', fn (Request $request) => $request->user());
 
 // Task Routes
 Route::middleware('auth:sanctum')->group(function () {
-    // fix this if the token is invalid or expired
-    // same as above here also
-    // try the prefix in auth middleware group
-
     Route::get('/tasks', [TaskController::class, 'index']);
     Route::post('/tasks', [TaskController::class, 'create']);
     Route::get('/tasks/{task}', [TaskController::class, 'show']);

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Task;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class TaskController extends Controller
 {
@@ -53,7 +53,7 @@ class TaskController extends Controller
         $this->authorizeTask($task, $request);
 
         $validated = $request->validate([
-            'title'     => 'sometimes|string|max:255',
+            'title' => 'sometimes|string|max:255',
             'completed' => 'sometimes|boolean',
         ]);
 
@@ -70,9 +70,7 @@ class TaskController extends Controller
     {
         $this->authorizeTask($task, $request);
 
-        $task->delete();
-
-        return response()->json(['message' => 'Task deleted']);
+        return $task->delete();
     }
 
     /**
